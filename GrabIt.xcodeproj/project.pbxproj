@@ -14,6 +14,7 @@
 		FE76472527AE081E006695C3 /* GrabItTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76472427AE081E006695C3 /* GrabItTests.swift */; };
 		FE76472F27AE081E006695C3 /* GrabItUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76472E27AE081E006695C3 /* GrabItUITests.swift */; };
 		FE76473127AE081E006695C3 /* GrabItUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76473027AE081E006695C3 /* GrabItUITestsLaunchTests.swift */; };
+		FE76473E27AE0842006695C3 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76473D27AE0841006695C3 /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		FE76472A27AE081E006695C3 /* GrabItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrabItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE76472E27AE081E006695C3 /* GrabItUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabItUITests.swift; sourceTree = "<group>"; };
 		FE76473027AE081E006695C3 /* GrabItUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabItUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FE76473D27AE0841006695C3 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				FE76471327AE081D006695C3 /* GrabItApp.swift */,
 				FE76471527AE081D006695C3 /* ContentView.swift */,
+				FE76473D27AE0841006695C3 /* GameScene.swift */,
 				FE76471727AE081E006695C3 /* Assets.xcassets */,
 				FE76471927AE081E006695C3 /* Preview Content */,
 			);
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE76473E27AE0842006695C3 /* GameScene.swift in Sources */,
 				FE76471627AE081D006695C3 /* ContentView.swift in Sources */,
 				FE76471427AE081D006695C3 /* GrabItApp.swift in Sources */,
 			);
