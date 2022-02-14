@@ -15,6 +15,9 @@
 		FE76472F27AE081E006695C3 /* GrabItUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76472E27AE081E006695C3 /* GrabItUITests.swift */; };
 		FE76473127AE081E006695C3 /* GrabItUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76473027AE081E006695C3 /* GrabItUITestsLaunchTests.swift */; };
 		FE76473E27AE0842006695C3 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE76473D27AE0841006695C3 /* GameScene.swift */; };
+		FE8CDA3B27B9ADF9000E3E24 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE8CDA3A27B9ADF9000E3E24 /* FoodItem.swift */; };
+		FEA437BB27B3081200FDA1E9 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA437BA27B3081200FDA1E9 /* ItemView.swift */; };
+		FEA437BE27B30B1B00FDA1E9 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA437BD27B30B1B00FDA1E9 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		FE76472E27AE081E006695C3 /* GrabItUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabItUITests.swift; sourceTree = "<group>"; };
 		FE76473027AE081E006695C3 /* GrabItUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabItUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FE76473D27AE0841006695C3 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		FE8CDA3A27B9ADF9000E3E24 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
+		FEA437BA27B3081200FDA1E9 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		FEA437BD27B30B1B00FDA1E9 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +104,9 @@
 			children = (
 				FE76471327AE081D006695C3 /* GrabItApp.swift */,
 				FE76471527AE081D006695C3 /* ContentView.swift */,
+				FEA437BA27B3081200FDA1E9 /* ItemView.swift */,
 				FE76473D27AE0841006695C3 /* GameScene.swift */,
+				FEA437BC27B30A6200FDA1E9 /* Model */,
 				FE76471727AE081E006695C3 /* Assets.xcassets */,
 				FE76471927AE081E006695C3 /* Preview Content */,
 			);
@@ -128,6 +136,15 @@
 				FE76473027AE081E006695C3 /* GrabItUITestsLaunchTests.swift */,
 			);
 			path = GrabItUITests;
+			sourceTree = "<group>";
+		};
+		FEA437BC27B30A6200FDA1E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FEA437BD27B30B1B00FDA1E9 /* Item.swift */,
+				FE8CDA3A27B9ADF9000E3E24 /* FoodItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,9 +277,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA437BE27B30B1B00FDA1E9 /* Item.swift in Sources */,
 				FE76473E27AE0842006695C3 /* GameScene.swift in Sources */,
 				FE76471627AE081D006695C3 /* ContentView.swift in Sources */,
 				FE76471427AE081D006695C3 /* GrabItApp.swift in Sources */,
+				FE8CDA3B27B9ADF9000E3E24 /* FoodItem.swift in Sources */,
+				FEA437BB27B3081200FDA1E9 /* ItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
