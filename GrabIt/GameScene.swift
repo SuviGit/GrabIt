@@ -19,6 +19,8 @@ class GameScene: SKScene {
     var container: SKSpriteNode?
     
     var isMoved: Bool = false
+    
+    var nodeName: String?
 
     
     var screenBounds = UIScreen.main.bounds
@@ -32,8 +34,7 @@ class GameScene: SKScene {
         createContainers()
 
         physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-
-
+        
         // Create sprites
 
         floor = SKSpriteNode(texture: nil, color: .brown, size: CGSize(width: screenBounds.width, height: 50))
@@ -57,20 +58,19 @@ class GameScene: SKScene {
         // Create physic bodies to the sprites
 
         floor?.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: (floor?.size.width)!, height: (floor?.size.height)!))
-        floor?.position = CGPoint(x: (floor?.position.x)!, y: (floor?.position.y)!)
+        
         floor?.physicsBody?.affectedByGravity = false
         floor?.physicsBody?.isDynamic = false
 
 
         player?.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: (player?.size.width)!, height: (player?.size.height)!))
-        player?.position = CGPoint(x: (player?.position.x)!, y: (player?.position.y)!)
+       
         player?.physicsBody?.isDynamic = false
 
 
         plate?.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: (plate?.size.width)!, height: (plate?.size.height)!))
         plate?.physicsBody?.pinned = true
         plate?.physicsBody?.mass = 10.0
-        plate?.position = CGPoint(x: (plate?.position.x)!, y: (plate?.position.y)!)
         plate?.physicsBody?.isDynamic = true
 
 
@@ -104,7 +104,7 @@ class GameScene: SKScene {
 
         let platePinJoint = SKPhysicsJointPin.joint(withBodyA: (self.player?.physicsBody)!,
                                                    bodyB: (self.plate?.physicsBody)!,
-                                                    anchor: CGPoint(x: (self.plate?.position.x)! + 0.5,
+                                                    anchor: CGPoint(x: (self.plate?.position.x)! + 2.5,
                                                                     y: (self.plate?.position.y)!))
 
         self.physicsWorld.add(platePinJoint)
@@ -123,28 +123,37 @@ class GameScene: SKScene {
             container?.zPosition = -1
         container?.name = "Container"
             
-        addItemsInContainer(currentContainer: container!)
+        addItemsInContainer(currentContainer: container!, numberOfItems: 5, addInContainer: true, itemPosition: nil)
         
         addChild(container!)
         }
     }
     
-    func addItemsInContainer(currentContainer: SKSpriteNode){
+    func addItemsInContainer(currentContainer: SKSpriteNode?, numberOfItems: Int, addInContainer:Bool, itemPosition:CGPoint?){
         
-        let _container = currentContainer
-        
-        for i in 0..<5{
+                
+        for i in 0..<numberOfItems{
             let item = SKSpriteNode.init(imageNamed: "apple")
             item.size = CGSize(width: 30, height: 30)
-            item.position = CGPoint(x: CGFloat(i)*(item.size.width), y: 100)
-            item.anchorPoint = CGPoint(x: -1.0, y: 0.0)
             item.zPosition = 1
             item.name = "\("apple") \(i)"
             
-            print(item.name as Any)
-           _container.addChild(item)
+            if(addInContainer){
+                
+                item.position = CGPoint(x: CGFloat(i)*(item.size.width) + 30, y: 100)
+                
+                let _container = currentContainer
+                _container!.addChild(item)
+            }else{
+                
+                item.position = itemPosition!
+                
+                addChild(item)
+            }
+           
         }
     }
+    
     
     
     func scrollContainers(currentLocation:CGPoint){
@@ -164,50 +173,85 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
-        
+       
        // self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        
-        let swipeDirections:[UISwipeGestureRecognizer.Direction] = [.right, .left]
-        
-        for swipeDirection in swipeDirections{
-            let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swiped(sender:)))
-            swipeRecognizer.direction = swipeDirection
-            view.addGestureRecognizer(swipeRecognizer)
-        }
+            let swipeDirections:[UISwipeGestureRecognizer.Direction] = [.right, .left]
+            
+            for swipeDirection in swipeDirections{
+                let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swiped(sender:)))
+                swipeRecognizer.direction = swipeDirection
+                view.addGestureRecognizer(swipeRecognizer)
+            }
+  
+            
     }
     
     @objc func swiped(sender: UISwipeGestureRecognizer){
        // print("swipe detected", sender.direction)
-        
-        var pos:CGPoint
-        
-        if(sender.direction == .left){
+        if(isMoved){
+            isMoved = false
             
-            pos = CGPoint(x: -200, y: 0.0)
-            scrollContainers(currentLocation: pos)
+            var pos:CGPoint
             
-        }else if(sender.direction == .right){
-         
-            pos = CGPoint(x: 200, y: 0.0)
-            scrollContainers(currentLocation: pos)
+            if(sender.direction == .left){
+                
+                pos = CGPoint(x: -200, y: 0.0)
+                scrollContainers(currentLocation: pos)
+                
+            }else if(sender.direction == .right){
+             
+                pos = CGPoint(x: 200, y: 0.0)
+                scrollContainers(currentLocation: pos)
+            }
+            
         }
         
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        guard let touch = touches.first else{return}
-//
-//        let location = touch.location(in: self)
-//
-//        dragSpriteNode(location: location)
+        guard let touch = touches.first else{return}
 
+        let location = touch.location(in: self)
+        let node: SKNode = self.atPoint(location)
+        
+       // print("node touch began  ",node.name as Any)
+       
+        if(node.name != "Container" && node.name != "" && node.name != nil){
+            node.removeFromParent()
+            addItemsInContainer(currentContainer: nil, numberOfItems: 1, addInContainer: false, itemPosition: location)
+            
+        }
+        else if(node.name == "Container"){
+           
+            isMoved = true
+        }
+
+        //dragSpriteNode(location: location)
+//
 //        let box = SKSpriteNode(texture: nil, color: .red, size: CGSize(width: 30, height: 30))
 //        box.position = location
 //        box.physicsBody?.mass = 1.2
 //        box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 30))
 //        addChild(box)
 
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else{return}
+
+        let location = touch.location(in: self)
+        let node:SKNode = self.atPoint(location)
+
+        //print("TOUCH ENDED..... ",node.name as Any)
+
+        if(nodeName == node.name && nodeName != "" && node.name != nil){
+                node.name = ""
+
+                node.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: 30, height: 30))
+                node.physicsBody?.mass = 1.0
+               
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -217,9 +261,12 @@ class GameScene: SKScene {
         let location = touch.location(in: self)
         let prevLocation = touch.previousLocation(in: self)
         
-        dragSpriteNode(location: location, prevlocation: prevLocation)
-        
+        let node:SKNode = self.atPoint(location)
 
+        if(node.name != "Container" && node.name != "" && node.name != nil){
+            dragSpriteNode(location: location, prevlocation: prevLocation)
+        }
+        
 
     }
     
@@ -231,14 +278,18 @@ class GameScene: SKScene {
         
         if( node.name != "Container"){
     
+            
+            nodeName = node.name
+            
             let diffX:CGFloat = location.x - prevlocation.x
             let diffY:CGFloat = location.y - prevlocation.y
             
-            let newLocation:CGPoint = CGPoint(x: node.position.x + diffX, y: node.position.y + diffY)
+            let newLocation:CGPoint = CGPoint(x: node.position.x + diffX , y: node.position.y + diffY)
 
             node.position = newLocation
             
             
+           
             
         }
         
