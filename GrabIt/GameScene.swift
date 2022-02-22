@@ -21,6 +21,8 @@ class GameScene: SKScene {
     var isMoved: Bool = false
     
     var nodeName: String?
+    
+    var swipeCount: Int = 0
 
     
     var screenBounds = UIScreen.main.bounds
@@ -155,23 +157,7 @@ class GameScene: SKScene {
     }
     
     
-    
-    func scrollContainers(currentLocation:CGPoint){
-          
-        let pos = currentLocation
-        
-        self.enumerateChildNodes(withName: "Container", using: ({
-            (node, error)in
-            //node.position.x -= 10
-            node.run(SKAction.moveBy(x: pos.x, y: 0.0, duration: 0.25))
-            
-            
-        }))
-        
-    }
-    
-    
-    
+  
     override func didMove(to view: SKView) {
        
        // self.anchorPoint = CGPoint(x: 0.0, y: 0.0)
@@ -187,26 +173,45 @@ class GameScene: SKScene {
     }
     
     @objc func swiped(sender: UISwipeGestureRecognizer){
+        
        // print("swipe detected", sender.direction)
         if(isMoved){
             isMoved = false
-            
+
             var pos:CGPoint
             
             if(sender.direction == .left){
                 
+                if swipeCount < 9  {swipeCount += 1}
                 pos = CGPoint(x: -200, y: 0.0)
                 scrollContainers(currentLocation: pos)
                 
             }else if(sender.direction == .right){
-             
+
+                if swipeCount > 0 {swipeCount -= 1}
                 pos = CGPoint(x: 200, y: 0.0)
                 scrollContainers(currentLocation: pos)
             }
             
         }
+
+    }
+    
+    func scrollContainers(currentLocation:CGPoint){
+
+        print(swipeCount)
         
+        if(swipeCount > 0 && swipeCount < 9){
+        let pos = currentLocation
         
+        self.enumerateChildNodes(withName: "Container", using: ({
+            (node, error)in
+
+                node.run(SKAction.moveBy(x: pos.x, y: 0.0, duration: 0.25))
+
+        }))
+        }
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -223,7 +228,6 @@ class GameScene: SKScene {
             
         }
         else if(node.name == "Container"){
-           
             isMoved = true
         }
 
